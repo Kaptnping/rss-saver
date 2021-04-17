@@ -29,7 +29,7 @@ feeds = [{"link": "https://taz.de/!p4615;rss/", "name": "TAZ | Politik", "modifi
 
 for feed in feeds:
   if db.feeds.find_one({"name": feed["name"]}):
-      continue
-    else:
-      db.feeds.insert_one(feed)
+    continue
+  else:
+    db.feeds.insert_one(feed)
  
