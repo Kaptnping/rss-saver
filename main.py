@@ -11,8 +11,6 @@ from bs4 import BeautifulSoup
 load_dotenv()
 client = pymongo.MongoClient(os.getenv('MONGO_DB_CONN_STRING'))
 db = client.Rss
-# Insert feeds with:
-# db.feeds.insert_one({"link": "https://taz.de/!s=&ExportStatus=Intern&SuchRahmen=Online;rss/", "name": "TAZ", "modified": time.localtime(time.time()), "etag": "" })
 
 feeds = db.feeds.find()
 count = 0
@@ -44,6 +42,7 @@ ms = f"""From: {os.getenv('CDTM_E_MAIL')}
 To: felderer.and@gmail.com
 Subject: RSS
 
-Added {count} Feed entries to DB"""
+Added {count} Feed entries to DB
+Feed entry's size is {round(db.command("collstats", "entries")["size"]/1000000, 3)} MB"""
 
 server.sendmail(os.getenv('CDTM_E_MAIL'), "felderer.and@gmail.com", ms)
